@@ -1,7 +1,9 @@
 gnome_sticky_notes_sources = [
   'main.c',
   'gnome-sticky-notes-application.c',
+  'gnome-sticky-notes-autostart.c',
   'gnome-sticky-notes-database.c',
+  'gnome-sticky-notes-tray.c',
   'gnome-sticky-notes-window.c',
 ]
 
