@@ -19,6 +19,54 @@
             </child>
           </object>
         </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Backup &amp; Restore</property>
+            <property name="description" translatable="yes">Back up your notes to a file or email a copy to yourself</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title" translatable="yes">Export Backup</property>
+                <property name="subtitle" translatable="yes">Save all notes to a file</property>
+                <child type="suffix">
+                  <object class="GtkButton">
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">_Export</property>
+                    <property name="use-underline">True</property>
+                    <property name="action-name">app.export-backup</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title" translatable="yes">Import Backup</property>
+                <property name="subtitle" translatable="yes">Restore notes from a backup file</property>
+                <child type="suffix">
+                  <object class="GtkButton">
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">_Import</property>
+                    <property name="use-underline">True</property>
+                    <property name="action-name">app.import-backup</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title" translatable="yes">Email Backup</property>
+                <property name="subtitle" translatable="yes">Send a backup to yourself as an attachment</property>
+                <child type="suffix">
+                  <object class="GtkButton">
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">_Email</property>
+                    <property name="use-underline">True</property>
+                    <property name="action-name">app.email-backup</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
   </template>

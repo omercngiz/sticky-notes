@@ -10,6 +10,7 @@
 
 #include "gnome-sticky-notes-application.h"
 #include "gnome-sticky-notes-autostart.h"
+#include "gnome-sticky-notes-backup.h"
 #include "gnome-sticky-notes-database.h"
 #include "gnome-sticky-notes-preferences.h"
 #include "gnome-sticky-notes-tray.h"
@@ -280,6 +281,145 @@ gnome_sticky_notes_application_about_action (GSimpleAction *action,
                          NULL);
 }
 
+/* --- backup / restore ----------------------------------------------------- */
+
+/* Inserts each backed-up note as a fresh row (new id) and opens a window for
+ * it, so a restore works the same on an empty or a populated database. */
+static void
+import_notes (GnomeStickyNotesApplication *self,
+              GPtrArray                   *notes)
+{
+  for (guint i = 0; i < notes->len; i++)
+    {
+      GnomeStickyNotesNoteData *n = g_ptr_array_index (notes, i);
+      g_autoptr (GError) error = NULL;
+      gint64 id;
+
+      id = gnome_sticky_notes_database_create_note (self->database, &error);
+      if (id < 0)
+        {
+          g_warning ("Failed to create note on import: %s", error->message);
+          continue;
+        }
+
+      n->id = id;
+      if (!gnome_sticky_notes_database_save_note (self->database, n, &error))
+        {
+          g_warning ("Failed to save imported note: %s", error->message);
+          continue;
+        }
+
+      open_note (self, n);
+    }
+}
+
+static void
+on_export_ready (GObject      *source,
+                 GAsyncResult *result,
+                 gpointer      user_data)
+{
+  GnomeStickyNotesApplication *self = user_data;
+  g_autoptr (GFile) file = NULL;
+  g_autoptr (GError) error = NULL;
+
+  file = gtk_file_dialog_save_finish (GTK_FILE_DIALOG (source), result, &error);
+  if (file == NULL)
+    return; /* cancelled or failed; dialog already reported user-facing errors */
+
+  if (!gnome_sticky_notes_backup_export (self->database, file, &error))
+    g_warning ("Backup export failed: %s", error->message);
+}
+
+static void
+gnome_sticky_notes_application_export_backup_action (GSimpleAction *action,
+                                                     GVariant *parameter,
+                                                     gpointer user_data)
+{
+  GnomeStickyNotesApplication *self = user_data;
+  GtkFileDialog *dialog = gtk_file_dialog_new ();
+
+  gtk_file_dialog_set_title (dialog, _("Export Backup"));
+  gtk_file_dialog_set_initial_name (dialog, "gnome-sticky-notes-backup.gsnbak");
+  gtk_file_dialog_save (dialog,
+                        gtk_application_get_active_window (GTK_APPLICATION (self)),
+                        NULL, on_export_ready, self);
+  g_object_unref (dialog);
+}
+
+static void
+on_import_ready (GObject      *source,
+                 GAsyncResult *result,
+                 gpointer      user_data)
+{
+  GnomeStickyNotesApplication *self = user_data;
+  g_autoptr (GFile) file = NULL;
+  g_autoptr (GPtrArray) notes = NULL;
+  g_autoptr (GError) error = NULL;
+
+  file = gtk_file_dialog_open_finish (GTK_FILE_DIALOG (source), result, &error);
+  if (file == NULL)
+    return; /* cancelled */
+
+  notes = gnome_sticky_notes_backup_read (file, &error);
+  if (notes == NULL)
+    {
+      g_warning ("Backup import failed: %s", error->message);
+      return;
+    }
+
+  import_notes (self, notes);
+}
+
+static void
+gnome_sticky_notes_application_import_backup_action (GSimpleAction *action,
+                                                     GVariant *parameter,
+                                                     gpointer user_data)
+{
+  GnomeStickyNotesApplication *self = user_data;
+  GtkFileDialog *dialog = gtk_file_dialog_new ();
+
+  gtk_file_dialog_set_title (dialog, _("Import Backup"));
+  gtk_file_dialog_open (dialog,
+                        gtk_application_get_active_window (GTK_APPLICATION (self)),
+                        NULL, on_import_ready, self);
+  g_object_unref (dialog);
+}
+
+/* Writes a backup to a cache file and hands it to the user's mail client as an
+ * attachment via xdg-email (so it lands in whatever account they send from,
+ * e.g. Gmail). */
+static void
+gnome_sticky_notes_application_email_backup_action (GSimpleAction *action,
+                                                    GVariant *parameter,
+                                                    gpointer user_data)
+{
+  GnomeStickyNotesApplication *self = user_data;
+  g_autoptr (GError) error = NULL;
+  g_autofree char *path = NULL;
+  g_autoptr (GFile) file = NULL;
+  g_autoptr (GSubprocess) proc = NULL;
+
+  /* A .txt name (the payload is plain text) is accepted by more mail clients
+   * than an unknown .gsnbak extension; import reads it back regardless. */
+  path = g_build_filename (g_get_user_cache_dir (),
+                           "gnome-sticky-notes-backup.txt", NULL);
+  file = g_file_new_for_path (path);
+
+  if (!gnome_sticky_notes_backup_export (self->database, file, &error))
+    {
+      g_warning ("Backup export for email failed: %s", error->message);
+      return;
+    }
+
+  proc = g_subprocess_new (G_SUBPROCESS_FLAGS_NONE, &error,
+                           "xdg-email",
+                           "--subject", "GNOME Sticky Notes Backup",
+                           "--attach", path,
+                           NULL);
+  if (proc == NULL)
+    g_warning ("Failed to launch mail client: %s", error->message);
+}
+
 static void
 gnome_sticky_notes_application_quit_action (GSimpleAction *action,
                                             GVariant *parameter,
@@ -296,6 +436,9 @@ static const GActionEntry app_actions[] = {
   { "new-note", gnome_sticky_notes_application_new_note_action },
   { "show-all", gnome_sticky_notes_application_show_all_action },
   { "preferences", gnome_sticky_notes_application_preferences_action },
+  { "export-backup", gnome_sticky_notes_application_export_backup_action },
+  { "import-backup", gnome_sticky_notes_application_import_backup_action },
+  { "email-backup", gnome_sticky_notes_application_email_backup_action },
   { "about", gnome_sticky_notes_application_about_action },
   { "quit", gnome_sticky_notes_application_quit_action },
 };
