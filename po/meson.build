@@ -1,1 +1,1 @@
-i18n.gettext('gnome-sticky-notes', preset: 'glib')
+i18n.gettext('sticky-notes', preset: 'glib')

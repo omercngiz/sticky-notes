@@ -1,4 +1,4 @@
-gnome-sticky-notes (0.1.0) unstable; urgency=medium
+sticky-notes (0.1.0) unstable; urgency=medium
 
   * Initial release: rich-text sticky notes daemon with tray, autostart,
     settings, inline to-do items, and local/email backup.

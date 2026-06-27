@@ -14,7 +14,7 @@ G_BEGIN_DECLS
 /* Whether the XDG autostart entry for the app currently exists. */
 gboolean gnome_sticky_notes_autostart_get_enabled (void);
 
-/* Writes (or removes) ~/.config/autostart/io.omercngiz.GnomeStickyNotes.desktop
+/* Writes (or removes) ~/.config/autostart/io.omercngiz.StickyNotes.desktop
  * so the app launches at login. The Exec line points at the currently running
  * executable, so it tracks wherever the app was installed. */
 gboolean gnome_sticky_notes_autostart_set_enabled (gboolean   enabled,

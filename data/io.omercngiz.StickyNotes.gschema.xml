@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="sticky-notes">
+	<schema id="io.omercngiz.StickyNotes" path="/io/omercngiz/StickyNotes/">
+		<key name="autostart" type="b">
+			<default>true</default>
+			<summary>Start automatically at login</summary>
+			<description>Whether to launch Sticky Notes when you log in, so your notes reappear automatically.</description>
+		</key>
+	</schema>
+</schemalist>

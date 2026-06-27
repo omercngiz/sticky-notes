@@ -17,7 +17,7 @@ debian/files
 debian/debhelper-build-stamp
 debian/*.substvars
 debian/*.log
-debian/gnome-sticky-notes/
+debian/sticky-notes/
 
 # Private maintainer notes (not for the public repo)
 DEV_NOTES.md

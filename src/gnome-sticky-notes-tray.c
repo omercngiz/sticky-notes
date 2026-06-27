@@ -400,13 +400,13 @@ sni_get_property (GDBusConnection  *connection,
   if (g_strcmp0 (property_name, "Category") == 0)
     return g_variant_new_string ("ApplicationStatus");
   if (g_strcmp0 (property_name, "Id") == 0)
-    return g_variant_new_string ("io.omercngiz.GnomeStickyNotes");
+    return g_variant_new_string ("io.omercngiz.StickyNotes");
   if (g_strcmp0 (property_name, "Title") == 0)
-    return g_variant_new_string ("Gnome Sticky Notes");
+    return g_variant_new_string ("Sticky Notes");
   if (g_strcmp0 (property_name, "Status") == 0)
     return g_variant_new_string ("Active");
   if (g_strcmp0 (property_name, "IconName") == 0)
-    return g_variant_new_string ("io.omercngiz.GnomeStickyNotes");
+    return g_variant_new_string ("io.omercngiz.StickyNotes");
   if (g_strcmp0 (property_name, "IconThemePath") == 0)
     return g_variant_new_string ("");
   if (g_strcmp0 (property_name, "ItemIsMenu") == 0)

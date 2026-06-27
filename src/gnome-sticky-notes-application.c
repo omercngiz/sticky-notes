@@ -36,7 +36,7 @@ gnome_sticky_notes_application_new (const char *application_id,
   return g_object_new (GNOME_STICKY_NOTES_TYPE_APPLICATION,
                        "application-id", application_id,
                        "flags", flags,
-                       "resource-base-path", "/io/omercngiz/GnomeStickyNotes",
+                       "resource-base-path", "/io/omercngiz/StickyNotes",
                        NULL);
 }
 
@@ -137,7 +137,7 @@ gnome_sticky_notes_application_startup (GApplication *app)
   self->tray = gnome_sticky_notes_tray_new (app);
 
   /* Keep the XDG autostart entry in sync with the user's preference. */
-  self->settings = g_settings_new ("io.omercngiz.GnomeStickyNotes");
+  self->settings = g_settings_new ("io.omercngiz.StickyNotes");
   g_signal_connect (self->settings, "changed::autostart",
                     G_CALLBACK (gnome_sticky_notes_application_autostart_changed),
                     self);
@@ -271,8 +271,8 @@ gnome_sticky_notes_application_about_action (GSimpleAction *action,
   window = gtk_application_get_active_window (GTK_APPLICATION (self));
 
   adw_show_about_dialog (GTK_WIDGET (window),
-                         "application-name", "Gnome Sticky Notes",
-                         "application-icon", "io.omercngiz.GnomeStickyNotes",
+                         "application-name", "Sticky Notes",
+                         "application-icon", "io.omercngiz.StickyNotes",
                          "developer-name", "omer",
                          "translator-credits", _ ("translator-credits"),
                          "version", "0.1.0",
@@ -339,7 +339,7 @@ gnome_sticky_notes_application_export_backup_action (GSimpleAction *action,
   GtkFileDialog *dialog = gtk_file_dialog_new ();
 
   gtk_file_dialog_set_title (dialog, _("Export Backup"));
-  gtk_file_dialog_set_initial_name (dialog, "gnome-sticky-notes-backup.gsnbak");
+  gtk_file_dialog_set_initial_name (dialog, "sticky-notes-backup.gsnbak");
   gtk_file_dialog_save (dialog,
                         gtk_application_get_active_window (GTK_APPLICATION (self)),
                         NULL, on_export_ready, self);
@@ -402,7 +402,7 @@ gnome_sticky_notes_application_email_backup_action (GSimpleAction *action,
   /* A .txt name (the payload is plain text) is accepted by more mail clients
    * than an unknown .gsnbak extension; import reads it back regardless. */
   path = g_build_filename (g_get_user_cache_dir (),
-                           "gnome-sticky-notes-backup.txt", NULL);
+                           "sticky-notes-backup.txt", NULL);
   file = g_file_new_for_path (path);
 
   if (!gnome_sticky_notes_backup_export (self->database, file, &error))
@@ -413,7 +413,7 @@ gnome_sticky_notes_application_email_backup_action (GSimpleAction *action,
 
   proc = g_subprocess_new (G_SUBPROCESS_FLAGS_NONE, &error,
                            "xdg-email",
-                           "--subject", "GNOME Sticky Notes Backup",
+                           "--subject", "Sticky Notes Backup",
                            "--attach", path,
                            NULL);
   if (proc == NULL)

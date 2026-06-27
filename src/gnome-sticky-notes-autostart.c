@@ -12,7 +12,7 @@
 #include <errno.h>
 #include <glib/gstdio.h>
 
-#define AUTOSTART_BASENAME "io.omercngiz.GnomeStickyNotes.desktop"
+#define AUTOSTART_BASENAME "io.omercngiz.StickyNotes.desktop"
 
 static char *
 autostart_file_path (void)
@@ -62,12 +62,12 @@ gnome_sticky_notes_autostart_set_enabled (gboolean   enabled,
 
   contents = g_strdup_printf ("[Desktop Entry]\n"
                               "Type=Application\n"
-                              "Name=Gnome Sticky Notes\n"
+                              "Name=Sticky Notes\n"
                               "Exec=%s\n"
-                              "Icon=io.omercngiz.GnomeStickyNotes\n"
+                              "Icon=io.omercngiz.StickyNotes\n"
                               "Terminal=false\n"
                               "X-GNOME-Autostart-enabled=true\n",
-                              exe != NULL ? exe : "gnome-sticky-notes");
+                              exe != NULL ? exe : "sticky-notes");
 
   return g_file_set_contents (path, contents, -1, error);
 }

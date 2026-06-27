@@ -462,7 +462,7 @@ gnome_sticky_notes_window_class_init (GnomeStickyNotesWindowClass *klass)
 	object_class->dispose = gnome_sticky_notes_window_dispose;
 	widget_class->size_allocate = gnome_sticky_notes_window_size_allocate;
 
-	gtk_widget_class_set_template_from_resource (widget_class, "/io/omercngiz/GnomeStickyNotes/gnome-sticky-notes-window.ui");
+	gtk_widget_class_set_template_from_resource (widget_class, "/io/omercngiz/StickyNotes/gnome-sticky-notes-window.ui");
 	gtk_widget_class_bind_template_child (widget_class, GnomeStickyNotesWindow, text_view);
 	gtk_widget_class_bind_template_child (widget_class, GnomeStickyNotesWindow, format_button);
 	gtk_widget_class_bind_template_child (widget_class, GnomeStickyNotesWindow, format_popover);

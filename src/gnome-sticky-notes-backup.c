@@ -88,7 +88,7 @@ gnome_sticky_notes_backup_read (GFile   *file,
 	if (!g_str_has_prefix (contents, BACKUP_MARKER))
 		{
 			g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_INVALID_DATA,
-			                     "Not a GNOME Sticky Notes backup file");
+			                     "Not a Sticky Notes backup file");
 			return NULL;
 		}
 

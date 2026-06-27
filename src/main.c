@@ -46,7 +46,7 @@ main (int   argc,
 	 * application windows, integration with the window manager/compositor, and
 	 * desktop features such as file opening and single-instance applications.
 	 */
-	app = gnome_sticky_notes_application_new ("io.omercngiz.GnomeStickyNotes", G_APPLICATION_DEFAULT_FLAGS);
+	app = gnome_sticky_notes_application_new ("io.omercngiz.StickyNotes", G_APPLICATION_DEFAULT_FLAGS);
 
 	/*
 	 * Run the application. This function will block until the application

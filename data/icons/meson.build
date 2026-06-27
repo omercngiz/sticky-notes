@@ -1,4 +1,4 @@
-application_id = 'io.omercngiz.GnomeStickyNotes'
+application_id = 'io.omercngiz.StickyNotes'
 
 scalable_dir = 'hicolor' / 'scalable' / 'apps'
 install_data(

@@ -16,7 +16,7 @@ there, even after you restart your computer.
 
 ## What is this?
 
-GNOME Sticky Notes is a small app for the **GNOME desktop on Linux**. Think of
+Sticky Notes is a small app for the **GNOME desktop on Linux**. Think of
 the paper sticky notes you put on your fridge or monitor — but on your screen.
 
 You can:
@@ -43,7 +43,7 @@ tray** (top bar), so it's always one click away.
 3. Double-click the downloaded file and click **Install** — or open a terminal
    in your Downloads folder and run:
    ```sh
-   sudo apt install ./gnome-sticky-notes_*.deb
+   sudo apt install ./sticky-notes_*.deb
    ```
 4. Open it from your applications menu — search for **“Sticky Notes”**.
 

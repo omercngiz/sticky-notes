@@ -1,9 +1,9 @@
 {
-    "id" : "io.omercngiz.GnomeStickyNotes",
+    "id" : "io.omercngiz.StickyNotes",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "48",
     "sdk" : "org.gnome.Sdk",
-    "command" : "gnome-sticky-notes",
+    "command" : "sticky-notes",
     "finish-args" : [
         "--share=network",
         "--share=ipc",
@@ -24,13 +24,13 @@
     ],
     "modules" : [
         {
-            "name" : "gnome-sticky-notes",
+            "name" : "sticky-notes",
             "builddir" : true,
             "buildsystem" : "meson",
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/omer/omer/gnome.builder/gnome-sticky-notes"
+                    "url" : "file:///home/omer/omer/gnome.builder/sticky-notes"
                 }
             ],
             "config-opts" : [

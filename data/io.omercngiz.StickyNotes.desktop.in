@@ -2,8 +2,8 @@
 Name=Sticky Notes
 GenericName=Sticky Notes
 Comment=Keep rich-text sticky notes and to-do lists on your desktop
-Exec=gnome-sticky-notes
-Icon=io.omercngiz.GnomeStickyNotes
+Exec=sticky-notes
+Icon=io.omercngiz.StickyNotes
 Terminal=false
 Type=Application
 Categories=Utility;GTK;

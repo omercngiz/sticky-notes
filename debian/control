@@ -1,4 +1,4 @@
-Source: gnome-sticky-notes
+Source: sticky-notes
 Section: gnome
 Priority: optional
 Maintainer: Omer Cengiz <omer.my.acc@gmail.com>
@@ -16,12 +16,12 @@ Standards-Version: 4.6.2
 Homepage: https://github.com/omercngiz/gnome-sticky-notes
 Rules-Requires-Root: no
 
-Package: gnome-sticky-notes
+Package: sticky-notes
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: xdg-utils
 Description: desktop sticky notes with rich text and to-do lists
- GNOME Sticky Notes keeps small rich-text notes on your desktop. It runs as a
+ Sticky Notes keeps small rich-text notes on your desktop. It runs as a
  background service with a status-notifier tray icon, restores your notes at
  login, and supports bold/italic/underline, fonts, colours, alignment, and
  inline checkable to-do items.

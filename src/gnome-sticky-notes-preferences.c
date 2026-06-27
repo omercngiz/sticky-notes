@@ -46,7 +46,7 @@ gnome_sticky_notes_preferences_class_init (GnomeStickyNotesPreferencesClass *kla
 
   object_class->dispose = gnome_sticky_notes_preferences_dispose;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/io/omercngiz/GnomeStickyNotes/gnome-sticky-notes-preferences.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/io/omercngiz/StickyNotes/gnome-sticky-notes-preferences.ui");
   gtk_widget_class_bind_template_child (widget_class, GnomeStickyNotesPreferences, autostart_row);
 }
 
@@ -57,7 +57,7 @@ gnome_sticky_notes_preferences_init (GnomeStickyNotesPreferences *self)
 
   /* Bind the toggle straight to the GSetting. The application watches
    * "changed::autostart" and reconciles the XDG autostart entry. */
-  self->settings = g_settings_new ("io.omercngiz.GnomeStickyNotes");
+  self->settings = g_settings_new ("io.omercngiz.StickyNotes");
   g_settings_bind (self->settings, "autostart",
                    self->autostart_row, "active",
                    G_SETTINGS_BIND_DEFAULT);

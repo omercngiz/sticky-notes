@@ -21,7 +21,7 @@ gnome_sticky_notes_sources += gnome.compile_resources('gnome-sticky-notes-resour
   c_name: 'gnome_sticky_notes'
 )
 
-executable('gnome-sticky-notes', gnome_sticky_notes_sources,
+executable('sticky-notes', gnome_sticky_notes_sources,
   dependencies: gnome_sticky_notes_deps,
        install: true,
 )
